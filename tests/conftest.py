@@ -1,6 +1,5 @@
 import subprocess
 import time
-
 import pytest
 from appium import webdriver
 
@@ -21,5 +20,5 @@ def run_appium_server():
 
 @pytest.fixture(scope='session')
 def driver(run_appium_server):
-    driver = webdriver.Remote('http://localhost:4723/wd/hub', android_get_desired_capabilities())
+    driver = webdriver.Remote('http://localhost:4723', android_get_desired_capabilities())
     yield driver
