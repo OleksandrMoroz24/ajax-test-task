@@ -41,8 +41,8 @@ def test_user_login_valid_credentials(user_login_fixture):
         SECOND_LOGIN_BUTTON_XPATH,
         EMAIL_FIELD_XPATH,
         PASSWORD_FIELD_XPATH,
-        "oleksandrmoroz2003@gmail.com",
-        "Ajax2405!"
+        "qa.ajax.app.automation@gmail.com",
+        "qa_automation_password"
     )
     time.sleep(5)
     try:
