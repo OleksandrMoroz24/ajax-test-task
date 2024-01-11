@@ -1,3 +1,5 @@
+import time
+
 import pytest
 from appium.webdriver.common.mobileby import MobileBy
 
@@ -15,6 +17,7 @@ def sidebar(driver):
     return Sidebar(driver)
 
 
+@pytest.fixture(scope='session')
 def login_and_get_sidebar(login_page, sidebar):
     # reuse paths for login
     LOGIN_BUTTON_XPATH = (
@@ -39,7 +42,7 @@ def login_and_get_sidebar(login_page, sidebar):
         "ComposeView[@resource-id='com.ajaxsystems:id/compose_view'])"
         "[4]/android.view.View/android.view.View/android.widget.Button"
     )
-
+    time.sleep(3)
     # Use login_page to perform login
     login_page.click_element((
         MobileBy.ID,
