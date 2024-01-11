@@ -3,7 +3,6 @@ import time
 from appium.webdriver.common.mobileby import MobileBy
 from selenium.common.exceptions import NoSuchElementException
 
-
 # XPath locators
 LOGIN_BUTTON_XPATH = (
     MobileBy.XPATH,
@@ -29,6 +28,33 @@ SECOND_LOGIN_BUTTON_XPATH = (
 )
 
 
+def test_user_login_invalid_credentials(user_login_fixture):
+    time.sleep(3)  # extra time for weaker systems
+    # Grant permissions if asked
+    user_login_fixture.click_element((
+        MobileBy.ID,
+        "com.android.permissioncontroller:id/permission_allow_button"
+    ))
+    # Login with invalid credentials
+    user_login_fixture.login(
+        LOGIN_BUTTON_XPATH,
+        SECOND_LOGIN_BUTTON_XPATH,
+        EMAIL_FIELD_XPATH,
+        PASSWORD_FIELD_XPATH,
+        "invalid@gmail.com",
+        "invalidpassword"
+    )
+    time.sleep(3)
+    try:
+        user_login_fixture.find_element((MobileBy.ID, "com.ajaxsystems:id/hubAdd"))
+        # If the element is found, assert failure, because it should not be present
+        assert False, "Element unexpectedly found"
+    except NoSuchElementException:
+        # If NoSuchElementException is raised, the test should pass
+        pass
+    user_login_fixture.driver.reset()
+
+
 def test_user_login_valid_credentials(user_login_fixture):
     # Grant permissions if asked
     user_login_fixture.click_element((
@@ -45,36 +71,10 @@ def test_user_login_valid_credentials(user_login_fixture):
         "qa_automation_password"
     )
     time.sleep(5)
+
     try:
         user_login_fixture.find_element((MobileBy.ID, "com.ajaxsystems:id/hubAdd"))
-        # Element is found. You can add further actions or assertions here.
+        # Element on main page is found.
     except NoSuchElementException:
-        # Element is not found. Handle the situation or assert failure.
+        # Element is not found.
         assert False, "Element with ID 'com.ajaxsystems:id/hubAdd' not found"
-    # user_login_fixture.driver.reset()
-
-
-def test_user_login_invalid_credentials(user_login_fixture):
-    user_login_fixture.driver.reset()
-    # Grant permissions if asked
-    user_login_fixture.click_element((
-        MobileBy.ID,
-        "com.android.permissioncontroller:id/permission_allow_button"
-    ))
-    # Login with invalid credentials
-    user_login_fixture.login(
-        LOGIN_BUTTON_XPATH,
-        SECOND_LOGIN_BUTTON_XPATH,
-        EMAIL_FIELD_XPATH,
-        PASSWORD_FIELD_XPATH,
-        "ivalid@gmail.com",
-        "invalidpassword"
-    )
-    time.sleep(3)
-    try:
-        user_login_fixture.find_element((MobileBy.ID, "com.ajaxsystems:id/hubAdd"))
-        # If the element is found, assert failure, because it should not be present
-        assert False, "Element unexpectedly found"
-    except NoSuchElementException:
-        # If NoSuchElementException is raised, the test should pass
-        pass
