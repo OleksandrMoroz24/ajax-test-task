@@ -3,7 +3,12 @@ import subprocess
 
 def get_first_device():
     try:
-        result = subprocess.run(['adb', 'devices'], stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
+        result = subprocess.run(
+            ["adb", "devices"],
+            stdout=subprocess.PIPE,
+            stderr=subprocess.PIPE,
+            text=True
+        )
         if result.stderr:
             print("Error:", result.stderr)
             return None
@@ -27,11 +32,11 @@ def get_first_device():
 def android_get_desired_capabilities():
     first_device_udid = get_first_device()
     if not first_device_udid:
-        first_device_udid = 'emulator-5554'  # default value
+        first_device_udid = "emulator-5554"  # default value
     return {
-        'platformName': 'Android',
-        'automationName': 'UiAutomator2',
-        'deviceName': first_device_udid,
-        'appPackage': 'com.ajaxsystems',
-        'appActivity': 'com.ajaxsystems.ui.activity.LauncherActivity'
+        "platformName": "Android",
+        "automationName": "UiAutomator2",
+        "deviceName": first_device_udid,
+        "appPackage": "com.ajaxsystems",
+        "appActivity": "com.ajaxsystems.ui.activity.LauncherActivity"
     }
