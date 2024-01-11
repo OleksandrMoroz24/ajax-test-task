@@ -1,0 +1,9 @@
+
+2024-01-11 13:00:29,342 - INFO - Starting test_user_login_invalid_credentials
+2024-01-11 13:00:40,418 - ERROR - Error in test_user_login_invalid_credentials
+2024-01-11 13:02:03,274 - INFO - Starting test_user_login_invalid_credentials
+2024-01-11 13:02:17,316 - INFO - test_user_login_invalid_credentials completed successfully
+2024-01-11 13:03:04,034 - INFO - Starting test_user_login_invalid_credentials
+2024-01-11 13:03:17,898 - INFO - test_user_login_invalid_credentials completed successfully
+2024-01-11 13:04:10,002 - INFO - Starting test_user_login_valid_credentials
+2024-01-11 13:04:22,332 - INFO - test_user_login_valid_credentials completed successfully
