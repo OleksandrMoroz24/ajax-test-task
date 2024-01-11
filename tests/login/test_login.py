@@ -1,3 +1,4 @@
+import logging
 import time
 
 from appium.webdriver.common.mobileby import MobileBy
@@ -29,6 +30,10 @@ SECOND_LOGIN_BUTTON_XPATH = (
 
 
 def test_user_login_invalid_credentials(user_login_fixture):
+    # logging
+    logger = logging.getLogger('pytest_logger')
+    logger.info("Starting test_user_login_invalid_credentials")
+
     time.sleep(3)  # extra time for weaker systems
     # Grant permissions if asked
     user_login_fixture.click_element((
@@ -42,25 +47,34 @@ def test_user_login_invalid_credentials(user_login_fixture):
         EMAIL_FIELD_XPATH,
         PASSWORD_FIELD_XPATH,
         "invalid@gmail.com",
-        "invalidpassword"
+        "invalidpassword!"
     )
     time.sleep(3)
     try:
         user_login_fixture.find_element((MobileBy.ID, "com.ajaxsystems:id/hubAdd"))
         # If the element is found, assert failure, because it should not be present
+        logger.error("Error in test_user_login_invalid_credentials")
         assert False, "Element unexpectedly found"
     except NoSuchElementException:
         # If NoSuchElementException is raised, the test should pass
         pass
     user_login_fixture.driver.reset()
 
+    logger.info("test_user_login_invalid_credentials completed successfully")
+
 
 def test_user_login_valid_credentials(user_login_fixture):
+    # logging
+    logger = logging.getLogger('pytest_logger')
+    logger.info("Starting test_user_login_valid_credentials")
+
+    time.sleep(1)
     # Grant permissions if asked
     user_login_fixture.click_element((
         MobileBy.ID,
         "com.android.permissioncontroller:id/permission_allow_button"
     ))
+    time.sleep(1)
     # Login with valid credentials
     user_login_fixture.login(
         LOGIN_BUTTON_XPATH,
@@ -77,4 +91,7 @@ def test_user_login_valid_credentials(user_login_fixture):
         # Element on main page is found.
     except NoSuchElementException:
         # Element is not found.
+        logger.error("Error in test_user_login_valid_credentials ")
         assert False, "Element with ID 'com.ajaxsystems:id/hubAdd' not found"
+
+    logger.info("test_user_login_valid_credentials completed successfully")
